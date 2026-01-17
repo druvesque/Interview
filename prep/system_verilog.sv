@@ -80,3 +80,33 @@
 //
 //     * const is used to make a variable read-only after initialization
 //
+//
+// Q10. Are for-loops synthesizable? 
+//      always_comb begin
+//          for (int i = 0; i < 8; i++)
+//              y[i] = a[i] & b[i];
+//      end
+//
+//      - For-loops in RTL are synthesizable if the iteration bounds are
+//        static and known at compile time, because synthesis tools unroll them
+//        into parallel hardware.
+//
+//      * Simulation checks if the code can execute logically.
+//        Synthesis checks if the code can be converted into hardware.
+//      * Inter-statement delays are not-synthesizable.
+//
+// Q11. Difference b/w case, unique case and priority case?
+//
+//      - 'case':- a normal case statement makes no assumption about
+//                 exclusivity and typically synthesizes to multiplexer logic.
+//        'priority case':- enforces ordered evaluation where the first
+//                          matching condition wins and is used in applications like priority
+//                          encoders, arbitration logic and interrupt controllers.
+//        'unique case':- assumes that exactly one condition will be true at
+//                        a time, which allows better optimization and enables runtime
+//                        checking, so it is commonly used in FSM designs where states are
+//                        mutually exclusive. 
+//
+//     * 'default' case is important in combinational logic to ensure all
+//       input combinations are covered and to prevent unintended latch
+//       inference.
