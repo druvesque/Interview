@@ -192,4 +192,92 @@
 //        relationship, while the action block (else) specifies what to do when
 //        the assertion fails, such as printing an error message.
 //
+// Q18. What is Randomization, Constrained Random Verification in SystemVerilog?
+//
+//      - 'Randomization':- automatically generate different test values to
+//                          explore more design scenarios without manually 
+//                          writing test cases.
+//
+//        Example: class pkt;
+//                     rand int addr;
+//                 endclass
+//
+//                 pkt p = new();
+//                 p.randomize();
+//
+//        'Constrained Randomization':- used to automatically generate diverse
+//                                      but valid test inputs, improving verification 
+//                                      coverage and bug detection.
+//
+//        Example: class pkt;
+//                     rand int addr;
+//                     constraint c1 {
+//                         addr < 256;
+//                         addr > 0;
+//                     }
+//                 endclass
+//
+//                 pkt p = new();
+//                 p.randomize();
+//
+//      * This construct is not synthesizable and is used in testbenches and
+//        is a part of verification environment only. 
+//
+//      * The randomization range is determined by the variable's data type
+//        and bit-width, and constraints further limit the generated values.
+//
+// Q19. Why constraints are important?
+//      
+//      - Values may be illegal during randomization.
+//      - Tests become unrealistic.
+//      - Debug becomes messy.
+//
+//      * Constrained random is better than pure random because it generates
+//        valid and targeted test values while still exploring corner cases,
+//        improving verification efficiency and coverage.
+//
+// Q20. Difference between rand & randc?
+//      
+//      - rand produces independent random values with possible repetition
+//        while randc ensures cyclic randomization where all values are
+//        generated once before repeating.
+//
+// Q21. What is functional coverage, how many types of coverage are
+//      there? 
+//
+//      - Coverage tells you how much of the design behaviour has been
+//        exercised by your tests. 
+//
+//        There are two-types of coverage:
+//        Code Coverage: (which parts of RTL Code are executed)
+//            Line Coverage
+//            Branch Coverage
+//            Toggle Coverage
+//            FSM Coverage
+//            
+//            Collected automatically by the simulator.
+//
+//        Functional Coverage
+//            Which design scenarios and features were exercised? 
+//            Written by verification engineer.
+//
+//            Example: did all opcodes occur? 
+//                     did all packet sizes occur?
+//                     did corner cases occur?
+//
+//      * Functional coverage is used to measure whether important design
+//        scenarios and corner cases have been exercised, whereas code coverage
+//        only measures which lines of RTL were executed.
+//
+// Q22. What is a cover-group?
+//
+//      - A user-defined construct to collect functional coverage.
+//
+//        Example: covergroup cg;
+//                     coverpoint opcode;
+//                 endgroup
+//
+//                 cg c1 = new();
+//                 c1.sample();
+//
 //
