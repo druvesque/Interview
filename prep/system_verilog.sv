@@ -60,6 +60,7 @@
 //
 //     - logic [7:0] x [3:0] :- unpacked array of 4 elements, where each
 //                              element is an 8-bit packed vector.
+//
 //       logic [3:0][7:0] x  :- two-dimensional packed array, meaning it is
 //                              treated as one packed 32-bit vector 
 //                              organized as 4 groups of 8 bits.
@@ -73,8 +74,10 @@
 //
 //     - parameter is used for configurable constants that can be overridden
 //       during module instantiation.
+//
 //       localparam is used for fixed constants that cannot be overriden and
 //       are meant to remain local to the module.
+//
 //       localparam is not allowed in module parameter port lists, only
 //       parameter is allowed for module parameterization. 
 //
@@ -99,9 +102,11 @@
 //
 //      - 'case':- a normal case statement makes no assumption about
 //                 exclusivity and typically synthesizes to multiplexer logic.
+//
 //        'priority case':- enforces ordered evaluation where the first
 //                          matching condition wins and is used in applications like priority
 //                          encoders, arbitration logic and interrupt controllers.
+//
 //        'unique case':- assumes that exactly one condition will be true at
 //                        a time, which allows better optimization and enables runtime
 //                        checking, so it is commonly used in FSM designs where states are
@@ -110,3 +115,81 @@
 //     * 'default' case is important in combinational logic to ensure all
 //       input combinations are covered and to prevent unintended latch
 //       inference.
+//
+// Q12. What is the difference between functions and tasks?
+// 
+//      - 'function':- used for zero-time computations and return a single
+//        value, which makes them suitable for synthesizable combinational logic
+//        such as arithmetic and data processing. functions cannot control
+//        timing controls like delays and event waits. function does not have an
+//        output or inout port. By default, functions are automatic and create
+//        separate storage for each cell. 
+//
+//        'task':- are used for procedural opeartions and can include timing
+//        controls and multiple output and inout arguments, so they are
+//        commonly used in testbenches and protocol modelling. Tasks are by
+//        default static unless declared automatic. 
+//
+// Q13. Where are delays added to the components?
+//     
+//      - Setup and hold timing checks cannot be verified at RTL because RTL
+//        does not include physical delays. These checks are performed using
+//        static timing analysis or gate-level simulation with back-annotated
+//        delays.
+//
+// Q14. What is an assertion?
+//
+//      - An assertion is a statement that checks whether a design behaviour
+//        satisfies a specified condition and reports an error if it is
+//        violated. A condition that must always be true during simulation.
+//
+//        They continuously check design rules during simulation and flag
+//        errors automatically.
+//
+//        Assertions do not stop the simulation. They only report an error or
+//        warning. Simulation stops only if you use system tasks like $fatal
+//        inside the assertion action.
+//
+// Q15. Difference between immediate and concurrent assertions?
+//
+//      - 'immediate':- check a condition at the exact point where the
+//                      statement executes. They behave like an if check.
+//                      
+//        Example: always_comb begin
+//                     assert (a != b)
+//                       else $error("a and b should not be equal");
+//                 end
+//
+//        'concurrent':- check relationships across time, usually synchronized
+//                       to a clock. They are used for protocol and timing
+//                       verification.
+//
+//        Example: assert property (@(posedge clk) req |-> ack);
+//                 on every posedge of clk, if req is high, then ack should be
+//                 high.
+//
+//        * Immediate assertions check conditions at the current simulation
+//          time, while concurrent assertions monitor signal relationship across
+//          clock cycles.
+//
+// Q16. What is the difference between |-> and |=> operator? 
+//    
+//      - A |-> B means when A becomes true, B must be true in the next clock
+//        cycle, whereas A |=> B means when A becomes true, B must be true in
+//        the same clock cycle. The difference is in when the consequence is
+//        checked.
+//
+// Q17. What is the purpose of using disable iff in an assertion? 
+//     
+//      - disable iff is used to temporarily turn off assertions during reset
+//        or invalid operating conditions as during reset, signals are
+//        unstable and assertions may falsely fail.
+//
+//        Example: assert property (@(posedge clk) disable iff (!rst_n)
+//                                  req |-> ack);
+//
+//      * The property block defines the assertion condition and timing
+//        relationship, while the action block (else) specifies what to do when
+//        the assertion fails, such as printing an error message.
+//
+//
