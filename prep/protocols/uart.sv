@@ -1,3 +1,23 @@
+// Q. UART Project Explanation.
+//
+//    - In my UART project, I designed and verified a configurable UART 
+//      transmitter and receiver using Verilog. On the design side,
+//      I implemented the baud rate generator, TX and RX finite state machines,
+//      shift registers for serial-to-parallel and parallel-to-serial
+//      conversion, and control logic for start, parity and stop bits.
+//
+//    - On the receiver side I implemented 16x oversampling with mid-bit
+//      sampling and added a double-flop synchronizer on the RX input to handle
+//      metastability. I also implemented framing (stop-bit) error and parity
+//      error detection.
+//
+//    - For verification, I developed a directed testbench that generated UART
+//      stimulus for different data patterns and baud rates. I monitored TX and
+//      RX waveforms in simulations to verify correct-frame format, bit timing,
+//      and protocol behaviour. I validated normal transaction, back-to-back
+//      frames, reset behaviour, and error cases like incorrect stop bits and
+//      parity mismatch by observing status flags and waveform timing.
+
 // Q. What is UART?
 //   
 //    - Universal Asynchronous Receiver Transmitter, it is a hardware
