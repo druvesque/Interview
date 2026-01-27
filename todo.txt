@@ -1,0 +1,16 @@
+- Basic Idea 
+ 
+  - Main Dir
+
+    - College Name
+      - Year
+        - Company Name
+          - Role
+            - FileName: Date (if possible)
+
+    - Offcampus
+      - Company Name
+        - Role
+          - FileName: Date 
+
+  
